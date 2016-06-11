@@ -1,0 +1,26 @@
+###############################################################################
+#                                                                             #
+#                                  ALIASES                                    #
+#                                                                             #
+###############################################################################
+
+#
+# DIRECTORIES
+#
+
+alias dev="cd ${ZDOTDIR:-$HOME}/Dev"
+
+#
+# GIT
+#
+
+alias gs='git status'
+alias gadd='git add'
+alias gcommit='git commit'
+
+#
+# GENERAL
+#
+alias ll='ls -la'
+
+source "$DOTFILES_ROOT/config/zprezto/init.zsh"
