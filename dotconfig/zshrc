@@ -8,19 +8,19 @@
 # DIRECTORIES
 #
 
-alias dev="cd ${ZDOTDIR:-$HOME}/Dev"
+alias dev="cd $HOME/Dev"
 
 #
 # GIT
 #
 
-alias gs='git status'
-alias gadd='git add'
-alias gcommit='git commit'
+alias gst="git status"
+alias gadd="git add"
+alias gcommit="git commit"
 
 #
 # GENERAL
 #
 alias ll='ls -la'
 
-source "$DOTFILES_ROOT/config/zprezto/init.zsh"
+source "$DOTFILES_DIR/config/zprezto/init.zsh"
