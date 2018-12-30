@@ -1,13 +1,29 @@
 #!/usr/bin/env bash
 
 declare -r SCRIPTPATH=$( cd $(dirname ${BASH_SOURCE[0]}) > /dev/null; pwd -P )
-declare -r DOTFILES_FLDR=$( cd $SCRIPTPATH/.. && pwd )
-declare -r CONFIG_FLDR=$DOTFILES_FLDR/config
-declare -r HOMECONFIG_FLDR=$DOTFILES_FLDR/homeconfig
+declare -r DOTFILES_DIR=$( cd $SCRIPTPATH/.. && pwd )
+declare -r HOMECONFIG_DIR=$DOTFILES_DIR/homeconfig
+declare -r DOTCONFIG_DIR=$DOTFILES_DIR/dotconfig
+declare -r APPSUPPORT_DIR=$DOTFILES_DIR/appsupport
 declare -r SCRIPTS_FLDR=$SCRIPTPATH/scripts
 
+symlink_config()
+{
+    src="$1"
+    dst="$2"
+    for config_file in "$src"/*; do
+        if [[ -d $config_file ]]; then
+            dst_path="$dst"/"$(basename $config_file)"
+        elif [[ -f $config_file ]]; then
+            dst_path="$dst"/."$(basename $config_file)"
+        fi
+        ln -s "$config_file" "$dst_path"
+    done
+}
+
 # Applications uses this variable to find their data.
-export DOTFILES_ROOT="$DOTFILES_FLDR"
+export ZDOTDIR="$HOME"/.config
+export DOTFILES_DIR="$DOTFILES_FLDR"
 
 # Installs brew.
 #/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -24,7 +40,14 @@ export DOTFILES_ROOT="$DOTFILES_FLDR"
 #git clone --recursive https://github.com/sorin-ionescu/prezto.git "$DOTFILES_FLDR/config/zprezto"
 
 # Creates symlink for every config file in the `config' folder.
-for config_file in "$HOMECONFIG_FLDR"/*; do
-  dst="${ZDOTDIR:-$HOME}/.$(basename $config_file)"
-  ln -s $config_file $dst
-done
+# symlink_config "$HOMECONFIG_DIR" "$HOME"
+# symlink_config "$DOTCONFIG_DIR" "$ZDOTDIR"
+
+###
+# Manual symlink
+###
+
+# VSCODE
+ln -s "$APPSUPPORT/vscode/keybindings.json" $HOME/Library/Application\ Support/Code/User/keybindings.json
+ln -s "$APPSUPPORT/vscode/settings.json" $HOME/Library/Application\ Support/Code/User/settings.json
+

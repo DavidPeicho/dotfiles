@@ -1,0 +1,34 @@
+// Place your key bindings in this file to override the defaults
+[
+    { "key": "ctrl+alt+down", "command": "" },
+    { "key": "ctrl+alt+up", "command": "" },
+    { "key": "ctrl+alt+left", "command": "" },
+    {
+        "key": "ctrl+alt+right",
+        "command": ""
+    },
+    {
+        "key": "cmd+h",
+        "command": "workbench.action.splitEditorRight"
+    },
+    {
+        "key": "cmd+enter",
+        "command": "workbench.action.splitEditorDown"
+    },
+    {
+        "key": "cmd+up",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "cmd+down",
+        "command": "workbench.action.navigateDown"
+    },
+    {
+        "key": "cmd+right",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "cmd+left",
+        "command": "workbench.action.navigateLeft"
+    },
+]

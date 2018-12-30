@@ -1,0 +1,9 @@
+{
+    "workbench.iconTheme": "eq-material-theme-icons-palenight",
+    "workbench.colorTheme": "Material Theme Palenight High Contrast",
+    
+    "terminal.external.osxExec": "iTerm.app",
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "terminal.integrated.fontFamily": "Roboto Mono Nerd Font Complete",
+    "terminal.integrated.fontSize": 12
+}

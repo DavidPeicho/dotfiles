@@ -9,6 +9,8 @@
 #
 
 alias dev="cd $HOME/Dev"
+alias dotfiles="cd $HOME/Dev/dotfiles"
+alias albedo="cd $HOME/Dev/albedo"
 
 #
 # GIT
@@ -21,6 +23,7 @@ alias gcommit="git commit"
 #
 # GENERAL
 #
-alias ll='ls -la'
+alias vim="nvim"
+alias ll="ls -la"
 
 source "$DOTFILES_DIR/config/zprezto/init.zsh"
