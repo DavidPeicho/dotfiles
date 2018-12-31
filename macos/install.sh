@@ -1,53 +1,72 @@
 #!/usr/bin/env bash
 
-declare -r SCRIPTPATH=$( cd $(dirname ${BASH_SOURCE[0]}) > /dev/null; pwd -P )
-declare -r DOTFILES_DIR=$( cd $SCRIPTPATH/.. && pwd )
+declare -r DOTFILES_DIR=$( cd $(dirname ${BASH_SOURCE[0]})/.. > /dev/null; pwd -P )
+
+# Contains all config files that go in ~/
 declare -r HOMECONFIG_DIR=$DOTFILES_DIR/homeconfig
+# Contains all config files that go in ~/.config
 declare -r DOTCONFIG_DIR=$DOTFILES_DIR/dotconfig
+# Contains all config files that go in ~/Library/Application Support
 declare -r APPSUPPORT_DIR=$DOTFILES_DIR/appsupport
-declare -r SCRIPTS_FLDR=$SCRIPTPATH/scripts
+# Contains all app/lib installed by this script.
+declare -r CONFIG_DIR=$DOTFILES_DIR/config
+# Contains scripts for macos install (brew, ...)
+declare -r SCRIPTS_DIR=$DOTFILES_DIR/macos/scripts
+
+###############################################################################
+#                                 FUNCTIONS                                   #
+###############################################################################
 
 symlink_config()
 {
-    src="$1"
-    dst="$2"
+  src="$1"
+  dst="$2"
+    prefix="$3"
+    echo "FOLDER $src to $dst"
     for config_file in "$src"/*; do
         if [[ -d $config_file ]]; then
             dst_path="$dst"/"$(basename $config_file)"
         elif [[ -f $config_file ]]; then
-            dst_path="$dst"/."$(basename $config_file)"
+            dst_path="$dst"/"$prefix$(basename $config_file)"
         fi
         ln -s "$config_file" "$dst_path"
     done
 }
 
-# Applications uses this variable to find their data.
-export ZDOTDIR="$HOME"/.config
-export DOTFILES_DIR="$DOTFILES_FLDR"
+main()
+{
+  # Applications uses this variable to find their data.
+  export ZDOTDIR="$HOME"/.config
+  export DOTFILES_DIR
 
-# Installs brew.
-#/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  # Creates dotfiles config folder holding installed app.
+  mkdir -p "$CONFIG_DIR"
+  # Creates ~/.config holding all configs that can go in XDG user dir.
+  mkdir -p "$HOME"/.config
 
-# Installs all brew dependencies.
-#$SCRIPTS_FLDR/brew.sh
+  #
+  # Brew installation.
+  #
+  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  $SCRIPTS_DIR/brew.sh
 
-# Install powerline fonts.
-# pip install --user git+git://github.com/Lokaltog/powerline --verbose
-# Install nerd fonts
-# brew cask install font-hack-nerd-font
+  #
+  # Powerline fonts installation.
+  #
+  pip install --user git+git://github.com/Lokaltog/powerline --verbose
+  brew cask install font-hack-nerd-font
 
-# Install ZSH THEME PREZTO
-#git clone --recursive https://github.com/sorin-ionescu/prezto.git "$DOTFILES_FLDR/config/zprezto"
+  #
+  # ZSH Prezto installation.
+  #
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "$CONFIG_DIR/zprezto"
 
-# Creates symlink for every config file in the `config' folder.
-# symlink_config "$HOMECONFIG_DIR" "$HOME"
-# symlink_config "$DOTCONFIG_DIR" "$ZDOTDIR"
+  # Basic config.
+  symlink_config "$HOMECONFIG_DIR" "$HOME" "."
+  symlink_config "$DOTCONFIG_DIR" "$ZDOTDIR" "."
+  # VSCode.
+  symlink_config "$APPSUPPORT_DIR/vscode" "$HOME/Library/Application\ Support/Code/User"
+}
 
-###
-# Manual symlink
-###
-
-# VSCODE
-ln -s "$APPSUPPORT/vscode/keybindings.json" $HOME/Library/Application\ Support/Code/User/keybindings.json
-ln -s "$APPSUPPORT/vscode/settings.json" $HOME/Library/Application\ Support/Code/User/settings.json
+main
 
