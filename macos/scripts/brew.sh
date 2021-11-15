@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-brew tap caskroom/fonts
-brew tap caskroom/cask
+brew tap homebrew/cask-fonts
+brew tap homebrew/cask
 
 ###############################################################################
 #                                                                             #
@@ -10,14 +10,13 @@ brew tap caskroom/cask
 ###############################################################################
 
 brew install git
+brew install git-lfs
 brew install node
 brew install zsh
 brew install cmake
 brew install python
-sudo easy_install pip
 brew install htop
-
-brew install cask
+brew install font-hack-nerd-font --cask
 
 ###############################################################################
 #                                                                             #
@@ -25,9 +24,9 @@ brew install cask
 #                                                                             #
 ###############################################################################
 
-brew cask install iterm2
-brew cask install spotify
-brew cask install visual-studio-code
-brew cask install spectacle
+brew install iterm2 --cask
+brew install spotify --cask
+brew install visual-studio-code --cask
+brew install spectacle --cask
 
 brew cleanup

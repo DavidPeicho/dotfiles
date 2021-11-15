@@ -38,7 +38,7 @@ symlink_config()
 #                                   MAIN                                      #
 ###############################################################################
 
-main()
+setup_zprezto()
 {
   # Applications uses this variable to find their data.
   export ZDOTDIR="$HOME"/.config
@@ -49,29 +49,42 @@ main()
   # Creates ~/.config holding all configs that can go in XDG user dir.
   mkdir -p "$HOME"/.config
 
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git "$CONFIG_DIR/zprezto"
+
+  # Basic config.
+  symlink_config "$HOMECONFIG_DIR" "$HOME" "."
+  symlink_config "$DOTCONFIG_DIR" "$ZDOTDIR" "."
+
+  # VSCode.
+  symlink_config "$APPSUPPORT_DIR/vscode" "$HOME/Library/Application\ Support/Code/User"
+
+  chsh -s /bin/zsh
+}
+
+setup_keyboard()
+{
+  # Fixes cursor speed in terminal.
+  defaults write NSGlobalDomain KeyRepeat -int 0
+}
+
+main()
+{
   #
   # Brew installation.
   #
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   $SCRIPTS_DIR/brew.sh
 
+  sudo easy_install pip
+
   #
   # Powerline fonts installation.
   #
-  pip install --user git+git://github.com/Lokaltog/powerline --verbose
-  brew cask install font-hack-nerd-font
+  pip3 install --user git+git://github.com/Lokaltog/powerline --verbose
 
-  #
-  # ZSH Prezto installation.
-  #
-  git clone --recursive https://github.com/sorin-ionescu/prezto.git "$CONFIG_DIR/zprezto"
-
-  # Basic config.
-  symlink_config "$HOMECONFIG_DIR" "$HOME" "."
-  symlink_config "$DOTCONFIG_DIR" "$ZDOTDIR" "."
-  # VSCode.
-  symlink_config "$APPSUPPORT_DIR/vscode" "$HOME/Library/Application\ Support/Code/User"
+  setup_zprezto
+  setup_keyboard
 }
 
-main
-
+#main
+setup_zprezto
