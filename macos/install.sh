@@ -67,6 +67,12 @@ setup_keyboard()
   defaults write NSGlobalDomain KeyRepeat -int 0
 }
 
+setup_term()
+{
+  # Extend color scheme for iTerm2
+  git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git _generated/iTerm2-Color-Schemes
+}
+
 main()
 {
   #
@@ -82,7 +88,10 @@ main()
   #
   pip3 install --user git+git://github.com/Lokaltog/powerline --verbose
 
+  mkdir -p _generated
+
   setup_zprezto
+  setup_term
   setup_keyboard
 }
 

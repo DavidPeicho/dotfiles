@@ -2,3 +2,7 @@
 *.o
 *.a
 config/*
+
+.DS_Store
+_generated/
+

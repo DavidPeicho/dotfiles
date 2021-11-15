@@ -25,3 +25,13 @@ $ sh macos/install.sh
 
 > Be careful, all configuration symlinks will be done toward the `dotfiles' folder,
 you are advised to choose the best location for it.
+
+### Terminal Color
+
+The extended color scheme will be downloaded in `dotfiles/_generated/iTerm2-Color-Schemes`.
+
+To import on, go to:
+
+* `Preferences > Profiles > Colors`
+* Open the dropdown `Color Presets...`
+* Import any schem you like in `iTerm2-Color-Schemes/schemes`

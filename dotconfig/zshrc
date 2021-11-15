@@ -23,7 +23,6 @@ alias gcommit="git commit"
 #
 # GENERAL
 #
-alias vim="nvim"
 alias ll="ls -la"
 
 source "$DOTFILES_DIR/config/zprezto/init.zsh"
