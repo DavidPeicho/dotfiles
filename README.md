@@ -1,9 +1,13 @@
 # dotfiles
+
 Contains my current MacOS dotfiles.
 
-## Manual Dependencies ##
+This dotfiles will install:
+* git
+* python3
+* pip
+* zprezto
 
-None.
 
 ## Installation ##
 
@@ -11,6 +15,8 @@ You first need to clone or download the repository:
 ```
 $ git clone git@github.com:DavidPeicho/dotfiles.git dotfiles
 ```
+
+Update the file `homeconfig/zshenv` with the absolute path to your dotfiles directory.
 
 You can install the configuration files by hand, or simply run the following command:
 ```
